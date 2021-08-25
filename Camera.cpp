@@ -4,6 +4,12 @@
 
 #include "Camera.h"
 
-vec4 Camera::retrieveRay(int i, int j) {
-  return vec4();
+void Camera::getRay(Ray& out, vec2 pos) {
+  float fovx = fovy * aspect;
+  float halfWidth = (float) width / 2.0f;
+  float halfHeight = (float) height / 2.0f;
+  float alpha = tan(glm::radians(fovx) / 2.0f) * ((pos.x - halfWidth) / halfWidth);
+  float beta = tan(glm::radians(fovy) / 2.0f) * ((halfHeight - pos.y) / halfHeight);
+  out.origin = eye;
+  out.direction = glm::normalize(-w + alpha * u + beta * v);
 }

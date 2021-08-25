@@ -6,8 +6,16 @@
 #define RAYTRACER_RAY_H
 
 
-class Ray {
+#include "raytracer.h"
 
+class Ray {
+  public:
+    vec3 origin;
+    vec3 direction;
+
+    Ray() = default;
+
+    Ray(vec3 origin, vec3 direction) : origin(origin), direction(direction) { }
 };
 
 

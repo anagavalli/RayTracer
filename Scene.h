@@ -7,6 +7,7 @@
 #include "Sampler.h"
 #include "Ray.h"
 #include "Camera.h"
+#include "Surface.h"
 
 class Scene {
     int width, height, numSamples;
@@ -16,7 +17,7 @@ class Scene {
     Film film;
     vec3 backgroundColor;
     //std::vector<Light> lights;
-    //std::vector<Surface> surfaces;
+    std::vector<Surface*> surfaces;
     //std::vector<Shader> shaders; necessary??
   public:
     Scene(
@@ -25,10 +26,12 @@ class Scene {
             int width, int height, float fovy,
             int numSamples)
             : width(width), height(height), numSamples(numSamples), backgroundColor(backgroundColor),
-            camera(eye, target, up, fovy, (float) width / (float) height),
+            camera(eye, target, up, fovy, (float) width / (float) height, width, height),
             sampler(width, height),
             film(width, height, numSamples) { }
     ~Scene() = default;
+
+    void addSurface(Surface* surface) { surfaces.push_back(surface); }
 
     Film& renderImage();
 };

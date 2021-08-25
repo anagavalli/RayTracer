@@ -6,19 +6,29 @@
 #define RAYTRACER_CAMERA_H
 
 #include "raytracer.h"
+#include "Ray.h"
 
 class Camera {
-    vec3 eye;
-    vec3 target;
-    vec3 up;
+    vec3 eye, target, up;
+    vec3 u, v, w;
+
+    int width, height;
+
+    mat4 transform;
 
     float fovy;
     float aspect;
   public:
-    Camera(vec3 eye, vec3 target, vec3 up, float fovy, float aspect)
-      : eye(eye), target(target), up(up), fovy(fovy), aspect(aspect) { }
+    Camera(vec3 eye, vec3 target, vec3 up, float fovy, float aspect, int width, int height)
+      : eye(eye), target(target), up(up), fovy(fovy), aspect(aspect), transform(1.0), width(width), height(height)
+      {
+        transform = glm::lookAt(eye, target, up);
+        w = glm::normalize(eye - target);
+        u = glm::normalize(glm::cross(up, w));
+        v = glm::cross(w, u);
+      }
 
-    vec4 retrieveRay(int i, int j);
+    void getRay(Ray& out, vec2 pos);
 };
 
 

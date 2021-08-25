@@ -9,8 +9,22 @@ Film &Scene::renderImage() {
     for (int x = 0; x < width; ++x) {
       for (int sampNo = 0; sampNo < numSamples; ++sampNo) {
         vec2 sample = sampler.getSample(x, y);
-        // TODO cast ray based on sample
-        vec3 color{ (float) x / (float) width, (float) y / (float) height, 0};
+        Ray ray{};
+        camera.getRay(ray, sample);
+
+        Intersection intersection{};
+        vec3 color;
+
+        for (auto surface : surfaces) {
+          bool didHit = surface->intersect(intersection, ray);
+
+          if (didHit) {
+            color = vec3(1.0);
+          }
+          else {
+            color = vec3(0.0);
+          }
+        }
         film.setBucketColor(x, y, sampNo, color);
       }
     }
