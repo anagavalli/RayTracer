@@ -5,10 +5,9 @@
 
 #include "Film.h"
 #include "Scene.h"
-#include "Sampler.h"
 
-void saveScreenshot(const std::string& fname, Film& film) {
-  FIBITMAP *img = FreeImage_ConvertFromRawBits(film.getBytes(), 100, 100, 100 * 3, 24, 0xFF0000, 0x00FF00, 0x0000FF, true);
+void saveScreenshot(const std::string& fname, Film& film, int width, int height) {
+  FIBITMAP *img = FreeImage_ConvertFromRawBits(film.getBytes(), width, height, width * 3, 24, 0xFF0000, 0x00FF00, 0x0000FF, true);
 
   std::cout << "Saving image: " << fname << "\n";
 
@@ -26,7 +25,7 @@ int main() {
   vec3 backgroundColor{0};
   Scene scene = Scene(eye, target, up, backgroundColor, width, height, fovy, numSamples);
 
-  saveScreenshot("test.png", scene.renderImage());
+  saveScreenshot("test.png", scene.renderImage(), width, height);
 
   FreeImage_DeInitialise();
   return 0;

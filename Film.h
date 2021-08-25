@@ -32,7 +32,7 @@ class Film {
     }
     ~Film() { delete[] pixels; }
 
-    void setBucketColor(int i, int j, int sampNo, vec3 color);
+    void setBucketColor(int i, int j, int sampNo, vec3& color);
 
     BYTE* getBytes();
 };

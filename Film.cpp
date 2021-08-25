@@ -9,7 +9,8 @@ BYTE *Film::getBytes() {
     for (int x = 0; x < width; ++x) {
       BYTE avg[3] = {0};
       averagePixelColor(x, y, avg);
-      memcpy(pixels + (y * width + x), avg, 3*sizeof(BYTE));
+      int index = (y * width + x) * 3;
+      memcpy(pixels + index, avg, 3*sizeof(BYTE));
     }
   }
 
@@ -23,12 +24,13 @@ void Film::averagePixelColor(int x, int y, BYTE* pixelCol) {
     int g = std::max(0, std::min(255, (int)floor(color.g * 256.0)));
     int b = std::max(0, std::min(255, (int)floor(color.b * 256.0)));
 
-    pixelCol[0] += r / numSamples;
+    // Reverse order because FreeImage can't use pixelmask on 24bit colors
+    pixelCol[2] += r / numSamples;
     pixelCol[1] += g / numSamples;
-    pixelCol[2] += b / numSamples;
+    pixelCol[0] += b / numSamples;
   }
 }
 
-void Film::setBucketColor(int i, int j, int sampNo, vec3 color) {
-  buckets.at(i).at(j).at(sampNo) = color;
+void Film::setBucketColor(int x, int y, int sampNo, vec3& color) {
+  buckets.at(y).at(x).at(sampNo) = color;
 }

@@ -10,7 +10,8 @@ Film &Scene::renderImage() {
       for (int sampNo = 0; sampNo < numSamples; ++sampNo) {
         vec2 sample = sampler.getSample(x, y);
         // TODO cast ray based on sample
-        film.setBucketColor(x, y, sampNo, backgroundColor);
+        vec3 color{ (float) x / (float) width, (float) y / (float) height, 0};
+        film.setBucketColor(x, y, sampNo, color);
       }
     }
   }
