@@ -15,8 +15,9 @@ class Sphere : public Surface {
     vec3 center;
     int radius;
   public:
-    Sphere(vec3 center, int radius) : center(center), radius(radius) { }
-    bool intersect(Intersection& out, Ray& ray);
+    Sphere(vec3 center, int radius, vec3 ambient, vec3 emission, vec3 diffuse, vec3 specular, int shininess)
+      : center(center), radius(radius), Surface(ambient, emission, diffuse, specular, shininess) { }
+    bool intersect(Intersection& out, const Ray& ray) override;
 };
 
 

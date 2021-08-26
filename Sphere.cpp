@@ -6,7 +6,7 @@
 
 float discriminant(float a, float b, float c) { return pow(b, 2) - 4.0f * a * c; }
 
-bool Sphere::intersect(Intersection& out, Ray& ray) {
+bool Sphere::intersect(Intersection& out, const Ray& ray) {
   float a = glm::dot(ray.direction, ray.direction);
   float b = 2 * glm::dot(ray.direction, ray.origin - center);
   float c = glm::dot(ray.origin - center, ray.origin - center) - pow(radius, 2);
@@ -19,6 +19,7 @@ bool Sphere::intersect(Intersection& out, Ray& ray) {
   vec3 point = ray.origin + (float) t * ray.direction;
   out.location = point;
   out.normal = glm::normalize(point - center);
+  out.directionToViewer = -ray.direction;
   out.t = t;
   return true;
 }

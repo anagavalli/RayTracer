@@ -8,6 +8,7 @@
 #include "Ray.h"
 #include "Camera.h"
 #include "Surface.h"
+#include "Light.h"
 
 class Scene {
     int width, height, numSamples;
@@ -16,7 +17,7 @@ class Scene {
     Sampler sampler;
     Film film;
     vec3 backgroundColor;
-    //std::vector<Light> lights;
+    std::vector<Light*> lights;
     std::vector<Surface*> surfaces;
     //std::vector<Shader> shaders; necessary??
   public:
@@ -32,6 +33,14 @@ class Scene {
     ~Scene() = default;
 
     void addSurface(Surface* surface) { surfaces.push_back(surface); }
+
+    void addLight(Light* light) { lights.push_back(light); }
+
+    Surface* getFirstIntersection(Intersection& out, const Ray& ray);
+
+    bool getAnyIntersection(Intersection& out, const Ray& ray);
+
+    void shadeLocation(vec3& outColor, const Intersection& intersection, Surface* surface);
 
     Film& renderImage();
 };

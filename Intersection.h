@@ -11,11 +11,11 @@
 
 class Intersection {
   public:
-    vec3 location, normal;
+    vec3 location, normal, directionToViewer;
     double t;
 
     Intersection() = default;
-    Intersection(vec3 location, vec3 normal, double t) : location(location), normal(normal), t(t) { }
+    Intersection(vec3 location, vec3 normal, vec3 directionToViewer, double t) : location(location), normal(normal), directionToViewer(directionToViewer), t(t) { }
 };
 
 
