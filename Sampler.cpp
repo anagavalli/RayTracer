@@ -5,5 +5,5 @@
 #include "Sampler.h"
 
 vec2 Sampler::getSample(int i, int j) {
-  return {(float) i + 0.5f / (float) width, (float) j + 0.5f / (float) height};
+  return {(float) i + 0.5f, (float) j + 0.5f};
 }
