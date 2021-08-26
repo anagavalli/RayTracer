@@ -31,7 +31,7 @@ Film &Scene::renderImage() {
             shadeLocation(curColor, intersection, surface);
             color += (float) pow(curReflectivity, i) * curColor;
 
-            ray = Ray(intersection.location, -2*glm::dot(ray.direction, intersection.normal)*intersection.normal);
+            ray = Ray(intersection.location, ray.direction - 2*glm::dot(ray.direction, intersection.normal)*intersection.normal);
           }
           else break;
         }
