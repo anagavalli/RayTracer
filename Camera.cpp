@@ -5,11 +5,11 @@
 #include "Camera.h"
 
 void Camera::getRay(Ray& out, vec2 pos) {
-  float fovx = fovy * aspect;
-  float halfWidth = (float) width / 2.0f;
-  float halfHeight = (float) height / 2.0f;
-  float alpha = tan(glm::radians(fovx) / 2.0f) * ((pos.x - halfWidth) / halfWidth);
-  float beta = tan(glm::radians(fovy) / 2.0f) * ((halfHeight - pos.y) / halfHeight);
+  double halfWidth = (float) width / 2.0f;
+  double halfHeight = (float) height / 2.0f;
+  double fovYRad = fovy * M_PI / 180;
+  float alpha = tan(fovYRad / 2) * aspect * ((pos.x - halfWidth) / halfWidth);
+  float beta = tan(fovYRad / 2.0f) * ((halfHeight - pos.y) / halfHeight);
   out.origin = eye;
-  out.direction = glm::normalize(-w + alpha * u + beta * v);
+  out.direction = glm::normalize((alpha * u) + (beta * v) - w);
 }
